@@ -1,0 +1,7 @@
+.root {
+    max-width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 12px 0 12px 0;
+    box-sizing: border-box;
+}

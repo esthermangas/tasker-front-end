@@ -1,0 +1,108 @@
+.root {
+    width: 100%;
+    height: 50px;
+    background-color: #222831;
+    z-index: 1201;
+    box-shadow: 0 1px 8px 1px rgba(0,0,0,0.62);;
+}
+.itemsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    height: 100%;
+}
+.left{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 25%;
+    justify-content: space-evenly;
+}
+.right{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 25%;
+    justify-content: space-evenly;
+
+}
+.button{
+    display: flex;
+    align-items: center;
+    color: white;
+}
+.button:hover{
+    color: #f2a365;
+    cursor: pointer;
+}
+.specialButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 30%;
+    background: linear-gradient(45deg, hsla(323, 78%, 53%, 1) 28%, hsla(29, 74%, 69%, 1) 100%);
+    transition: all .2s ease-in-out;
+}
+
+.specialButtonIcon {
+    color: white;
+}
+
+.specialButton:hover{
+    transform: scale(1.1);
+    background: linear-gradient(45deg, hsla(323, 78%, 53%, 1) 28%, hsla(29, 74%, 69%, 1) 100%);
+    cursor: pointer;
+}
+.icons{
+    margin-right: 6px;
+}
+.imgSession {
+    width: 40px;
+    height: 40px;
+    background-color: #f2a365;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.imgSession:hover {
+    cursor: pointer;
+    box-sizing: border-box;
+    transition-duration: 100ms;
+    background: linear-gradient(45deg, hsla(29, 74%, 69%, 1) 28%, hsla(323, 78%, 53%, 1)  100%);
+
+}
+
+@media only screen and (max-width: 1023px) {
+    .left{
+        width: 50%;
+    }
+    .right{
+        width: 50%;
+    }
+}
+
+.searchContainer {
+    display: flex;
+}
+
+.searchInput{
+    margin-left: 4px;
+    background-color: #3d3d43;
+    color:white;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    padding: 6px 4px;
+}
+
+.searchInput:focus{
+    outline: none;
+}
+

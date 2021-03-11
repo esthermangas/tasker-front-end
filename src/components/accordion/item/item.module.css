@@ -1,0 +1,48 @@
+.item {
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.taskCont {
+    margin-left: 8px;
+}
+
+.task{
+}
+
+.taskDate {
+    font-size: 10px;
+    padding-left: 4px;
+    box-sizing: border-box;
+    font-style: italic;
+}
+
+.taskDone{
+    text-decoration: line-through;
+    color: #807f7f;
+}
+
+
+.checkTaskSpan {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #f2a365;
+    border-radius: 4px;
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkTaskSpan:hover {
+    box-shadow: 0 0 12px 1px rgba(242,163,101,0.74);
+    cursor: pointer;
+    transition-duration: 200ms;
+}
+
+.checkTaskSpanDone {
+    background-color: #f2a365;
+}

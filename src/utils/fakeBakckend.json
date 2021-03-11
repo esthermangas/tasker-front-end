@@ -1,0 +1,63 @@
+{
+  "users": [{
+    "id": "1",
+    "email": "esther@gmail.com",
+    "password": "123456*",
+    "collections": ["1", "2"]
+  }],
+
+  "collections": [
+    {
+    "id": "1",
+    "name": "school",
+    "icon": "school",
+    "tasks": ["1a", "2a"],
+    "id_user": "1"
+  },
+    {
+      "id": "2",
+      "name": "home",
+      "icon": "home",
+      "tasks": ["1b", "2b"],
+      "id_user": "1"
+    }
+  ],
+
+  "tasks": [
+    {
+      "id": "1a",
+      "description": "excursión al Museu Dali",
+      "date": "03-05-2021",
+      "done": false,
+      "id_collection": "1",
+      "id_user": "1"
+    },
+
+     {
+      "id": "2a",
+      "description": "examen biologia",
+      "date": "03-9-2021",
+      "done": false,
+      "id_collection": "1",
+       "id_user": "1"
+    },
+
+    {
+      "id": "1b",
+      "description": "actualizar seguro casa",
+      "date": "04-01-2021",
+      "done": false,
+      "id_collection": "2",
+      "id_user": "1"
+    },
+
+     {
+      "id": "2b",
+      "description": "Llenar deposito gasoil",
+      "date": "03-04-2021",
+      "done": false,
+      "id_collection": "2",
+      "id_user": "1"
+    }
+  ]
+}
