@@ -9,7 +9,7 @@
 .formContainer {
     border-radius: 5%;
     width: 500px;
-    height: 500px;
+    height: 600px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -24,6 +24,15 @@
     text-align: center;
 }
 
+.nameDiv{
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.nameInput {
+    width: 48%;
+}
 .input {
     margin-bottom: 15px;
     width: 100%;

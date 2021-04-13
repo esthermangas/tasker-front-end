@@ -72,11 +72,13 @@
     border-bottom-left-radius: 15px;
     transition: background-color 0.5s ease-in-out;
 }
-
+.footer:hover{
+    cursor: pointer;
+    background-color: #3d3d43;
+}
 .footerClose {
     background-color: #3d3d43;
     transition: background-color 0.5s ease-in-out;
-
 }
 
 .footerText {

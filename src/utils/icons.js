@@ -12,8 +12,7 @@ import {
   FiUsers,
   FiUser,
 } from 'react-icons/fi';
-import styles from './selectIcons.module.css';
-import { hashCode, intToRGB } from '../../utils/randomColorsGenerator';
+import styles from '../components/selectIcons/selectIcons.module.css';
 
 const iconsArr = [
   { icon: FiBookOpen, value: 'School' },
@@ -30,16 +29,14 @@ const iconsArr = [
   { icon: FiUser, value: 'Personal' },
 ];
 
-const iconsMap = {};
+export const iconsMap = {};
+export const iconsMapDisplay = {};
 
 iconsArr.forEach((el) => {
   const Icon = el.icon;
   const obj = {
     label: (
-      <span
-        className={styles.spanIcon}
-        style={{ backgroundColor: `#${intToRGB(hashCode(el.value))}` }}
-      >
+      <span className={styles.spanIcon}>
         <Icon size="20" />
       </span>
     ),
@@ -48,4 +45,25 @@ iconsArr.forEach((el) => {
   iconsMap[el.value] = obj;
 });
 
-export default iconsMap;
+iconsArr.forEach((el) => {
+  const Icon = el.icon;
+  const obj = {
+    label: (props) => {
+      const { color, padding } = props;
+      const spanStyes = { backgroundColor: 'black' };
+      if (color) {
+        spanStyes.backgroundColor = color;
+      }
+      if (padding) {
+        spanStyes.padding = padding;
+      }
+      return (
+        <span className={styles.spanIcon} style={spanStyes}>
+          <Icon size="20" />
+        </span>
+      );
+    },
+    value: el.value,
+  };
+  iconsMapDisplay[el.value] = obj;
+});

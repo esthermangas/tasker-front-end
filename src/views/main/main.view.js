@@ -1,37 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import classnames from 'classnames';
+import { connect } from 'react-redux';
 import styles from './main.module.css';
 import NavBar from './navbar';
 import Drawer from './drawer/drawer.view';
-import Accordion from '../../components/accordion';
+import Dashboard from '../dashboard';
+import Colections from '../colections';
+import OneColection from '../oneColection/oneColection.view';
+import fetchResource from '../../utils/fetchResource';
+import taskerTypes from '../../context/types';
+import Calendar from '../calendar';
 
-const Main = () => {
-  const collection1 = {
-    name: 'School',
-    icon: 'School',
-  };
-  const tasks1 = [
-    { description: 'exam biology', done: false, date: '2021-03-20' },
-    { description: 'math project', done: true, date: '2021-03-15' },
-  ];
-  const collection2 = {
-    name: 'My',
-    icon: 'Personal',
-  };
-  const tasks2 = [
-    { description: 'Peluquería mechas', done: true, date: '2021-03-26' },
-    { description: 'Mi cunpleaños', done: false, date: '2021-03-31' },
-    { description: 'Comida con Xurrymindungui', done: false, date: '2021-03-31' },
-    { description: 'Comprar bambas nuevas', done: true, date: '2021-03-31' },
-    { description: 'Encontrar tranajo yoro fuerte', done: false, date: '2021-03-31' },
-  ];
-  const collection3 = {
-    name: 'Gym',
-    icon: 'Sport',
-  };
-  const tasks3 = [
-    { description: 'Partido Basket', done: false, date: '2021-03-20' },
-    { description: 'Entreno con equipo calella', done: true, date: '2021-03-15' },
-  ];
+const Main = (props) => {
+  const { openedDrawer, refresh, setColections, setRefresh } = props;
+  const location = useLocation();
+  const containerClass = classnames(styles.container, {
+    [styles.containerMove]: openedDrawer,
+  });
+
+  const containerStyle = {};
+  if (location.pathname.includes('calendar')) {
+    containerStyle.paddingTop = 0;
+  }
+  useEffect(() => {
+    if (refresh) {
+      fetchResource('GET', 'colection', {}, {}).then((res) => {
+        setColections(res);
+        setRefresh(false);
+      });
+    }
+  }, [refresh]);
+
   return (
     <div className={styles.root}>
       <div>
@@ -39,14 +39,32 @@ const Main = () => {
         <Drawer />
       </div>
       <div className={styles.mainContainer}>
-        <div className={styles.container}>
-          <Accordion collection={collection1} tasks={tasks1} />
-          <Accordion collection={collection2} tasks={tasks2} />
-          <Accordion collection={collection3} tasks={tasks3} />
+        <div className={containerClass} style={containerStyle}>
+          <Switch>
+            <Route exact path="/app/dashboard" component={Dashboard} />
+            <Route exact path="/app/collections" component={Colections} />
+            <Route exact path="/app/collections/:id" component={OneColection} />
+            <Route exact path="/app/calendar" component={Calendar} />
+            <Redirect from="/app" to="/app/dashboard" />
+          </Switch>
         </div>
       </div>
     </div>
   );
 };
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    openedDrawer: state.drawer,
+    refresh: state.refresh,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setColections: (res) => dispatch({ type: taskerTypes.SET_COLECTIONS, payload: res }),
+    setRefresh: (value) => dispatch({ type: taskerTypes.SET_REFRESH, payload: value }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

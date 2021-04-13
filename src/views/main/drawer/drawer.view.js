@@ -11,20 +11,15 @@ const useStyles = makeStyles(() => ({
     maxWidth: 200,
     overflow: 'hidden',
     zIndex: 1,
+    boxShadow: '1px 8px 8px 1px rgb(0 0 0 / 62%)',
   },
   anchorLeft: {
     borderRight: 'none',
   },
 }));
 
-const collection = [
-  'School',
-  'Jobfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-  'Home',
-  'Gym',
-];
 const Drawer = (props) => {
-  const { openDrawer } = props;
+  const { openDrawer, colections } = props;
   const materialStyles = useStyles();
   return (
     <MaterialDrawer
@@ -33,7 +28,7 @@ const Drawer = (props) => {
       open={openDrawer}
       classes={{ paper: materialStyles.paper, paperAnchorDockedLeft: materialStyles.anchorLeft }}
     >
-      <List items={collection} />
+      <List items={colections} />
     </MaterialDrawer>
   );
 };
@@ -41,6 +36,7 @@ const Drawer = (props) => {
 const mapStateToProps = (state) => {
   return {
     openDrawer: state.drawer,
+    colections: state.colections,
   };
 };
 

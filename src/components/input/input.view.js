@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import styles from './input.module.css';
 
 const Input = (props) => {
-  const { label, size, error, value, onChange, ...rest } = props;
+  const { label, error, value, onChange, ...rest } = props;
   const [active, setActive] = useState(false);
-  const [internalValue, setInternalValue] = useState(value);
-
+  useEffect(() => {
+    if (value) {
+      setActive(true);
+    }
+  }, [value]);
   const inputClass = classNames(styles.input, {
     [styles.error]: error,
     [styles.activeInput]: active,
@@ -18,7 +21,7 @@ const Input = (props) => {
     setActive(true);
   };
   const handleBlur = () => {
-    if (!internalValue) {
+    if (!value) {
       setActive(false);
     }
   };
@@ -27,7 +30,6 @@ const Input = (props) => {
     if (onChange) {
       onChange(e);
     }
-    setInternalValue(e.target.value);
   };
   return (
     <div className={styles.root}>
@@ -36,7 +38,7 @@ const Input = (props) => {
         className={inputClass}
         onChange={handleInternalChange}
         {...rest}
-        value={internalValue}
+        value={value}
         onBlur={handleBlur}
         onFocus={handleFocus}
       />

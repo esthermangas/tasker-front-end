@@ -1,0 +1,25 @@
+.root {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    background-color: #3d3d43;
+    letter-spacing: 2px;
+    margin: 10px;
+    justify-content: space-between;
+    font-weight: 700;
+}
+.root:hover{
+    background-color: #636066;
+    transition-duration: 200ms;
+    cursor: pointer;
+}
+
+.name {
+    overflow-wrap: break-word;
+}
+

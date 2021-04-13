@@ -8,6 +8,7 @@
 
 .taskCont {
     margin-left: 8px;
+    width: 100%;
 }
 
 .task{
@@ -38,11 +39,57 @@
 }
 
 .checkTaskSpan:hover {
-    box-shadow: 0 0 12px 1px rgba(242,163,101,0.74);
+    box-shadow: 0 0 6px 1px rgba(242,163,101,0.74);
     cursor: pointer;
     transition-duration: 200ms;
 }
 
 .checkTaskSpanDone {
     background-color: #f2a365;
+}
+
+.optionsContainer {
+    display: flex;
+    align-items: flex-end;
+}
+
+.edit{
+    margin-right: 8px;
+    color: hsl(323, 75%, 67%);
+}
+
+.trash{
+    color: hsl(323, 75%, 67%);
+}
+
+.edit:hover{
+    color: hsl(269, 92%, 85%);
+    cursor: pointer;
+}
+.trash:hover{
+    color: hsl(269, 92%, 85%);
+    cursor: pointer;
+}
+
+.editModal{
+    background-color: #f2a365;
+}
+.inputsModal {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.input{
+    width: 50%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    justify-content: space-evenly;
 }

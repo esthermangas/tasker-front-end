@@ -1,5 +1,5 @@
 import ReactSelect from 'react-select';
-import iconsMap from './icons';
+import { iconsMap } from '../../utils/icons';
 import styles from './selectIcons.module.css';
 
 const Select = (props) => {

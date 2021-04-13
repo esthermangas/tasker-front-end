@@ -1,12 +1,14 @@
 .spanIcon {
-    width: 30px;
-    height: 30px;
-    background-color: #f2a365;
+    width: fit-content;
+    height: fit-content;
+    padding: 4px;
+    background-color: #000000;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    margin-right: 4px;
 }
 
 .select {

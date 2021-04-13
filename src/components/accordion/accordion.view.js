@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { FiArrowRight, FiChevronDown } from 'react-icons/all';
 import classNames from 'classnames';
+import { useHistory } from 'react-router-dom';
 import styles from './accordion.module.css';
-import iconsMap from '../selectIcons/icons';
+import { iconsMapDisplay } from '../../utils/icons';
 import Item from './item/item.view';
 
 const Accordion = (props) => {
-  const { collection, tasks } = props;
-  const icon = iconsMap[collection.icon].label;
-  const [open, setOpen] = useState(false);
+  const { collection, tasks, onChangeItem } = props;
+  const history = useHistory();
+  const icon = iconsMapDisplay[collection.icon].label;
+  const [open, setOpen] = useState(true);
   const handleClickToOpen = () => {
     setOpen(!open);
   };
@@ -21,6 +23,9 @@ const Accordion = (props) => {
   const iconClass = classNames(styles.icon, {
     [styles.iconOpen]: open,
   });
+  const goToColection = () => {
+    history.push(`/app/collections/${collection.id}`);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer} onClick={handleClickToOpen}>
@@ -33,9 +38,11 @@ const Accordion = (props) => {
         </span>
       </div>
       <div className={itemsContainerClass}>
-        {tasks && tasks.length > 0 && tasks.map((task) => <Item task={task} />)}
+        {tasks &&
+          tasks.length > 0 &&
+          tasks.map((task) => <Item task={task} onCheck={onChangeItem} />)}
       </div>
-      <div className={footerClass}>
+      <div className={footerClass} onClick={goToColection}>
         <div className={styles.footerText}>Go to Collection</div>
         <span className={styles.footerIcon}>
           <FiArrowRight />
