@@ -50,15 +50,15 @@ iconsArr.forEach((el) => {
   const obj = {
     label: (props) => {
       const { color, padding } = props;
-      const spanStyes = { backgroundColor: 'black' };
+      const spanStyles = { backgroundColor: 'black' };
       if (color) {
-        spanStyes.backgroundColor = color;
+        spanStyles.backgroundColor = color;
       }
       if (padding) {
-        spanStyes.padding = padding;
+        spanStyles.padding = padding;
       }
       return (
-        <span className={styles.spanIcon} style={spanStyes}>
+        <span className={styles.spanIcon} style={spanStyles}>
           <Icon size="20" />
         </span>
       );

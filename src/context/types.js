@@ -9,6 +9,7 @@ const taskerTypes = Object.freeze({
   EDIT_MODAL_FORM: 'EDIT_MODAL_FORM',
   CLEAN_EDIT_MODAL_FORM: 'CLEAN_EDIT_MODAL_FORM',
   SET_TASKS: 'SET_TASKS',
+  SET_REFRESH_COLECTION: 'SET_REFRESH_COLECTION',
 });
 
 export default taskerTypes;

@@ -7,6 +7,7 @@ const initialState = {
   colections: [],
   toEditColection: {},
   tasks: [],
+  refreshColection: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -41,6 +42,9 @@ const reducer = (state = initialState, action) => {
       return newState;
     case taskerTypes.SET_TASKS:
       newState.tasks = action.payload;
+      return newState;
+    case taskerTypes.SET_REFRESH_COLECTION:
+      newState.refreshColection = action.payload;
       return newState;
     default:
       return newState;

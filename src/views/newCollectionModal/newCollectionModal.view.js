@@ -10,7 +10,14 @@ import fetchResource from '../../utils/fetchResource';
 import ColorPicker from '../../components/colorPicker';
 
 const NewCollectionModal = (props) => {
-  const { openModal, closeModal, setRefresh, editData, cleanEditValues } = props;
+  const {
+    openModal,
+    closeModal,
+    setRefresh,
+    setRefreshColection,
+    editData,
+    cleanEditValues,
+  } = props;
   const [colData, setColData] = useState({ icon: '', name: '', color: '#e21b1b' });
   const editMode = () => {
     return Object.keys(editData).length > 0;
@@ -52,7 +59,7 @@ const NewCollectionModal = (props) => {
         color: colData.color,
       };
       fetchResource('PATCH', `colection/${editData.id}`, { body: finalData }, {}).then(() => {
-        setRefresh(true);
+        setRefreshColection(true);
         cleanEditValues();
         closeModal();
       });
@@ -63,9 +70,11 @@ const NewCollectionModal = (props) => {
     <Modal open={openModal} closeModal={handleCloseModal}>
       <div className={styles.modalContainer}>
         <div className={styles.dataContainer}>
-          <div className={styles.select}>
+          <div className={styles.data}>
             <Select value={colData.icon} onChange={handleSelectIcon} />
-            <ColorPicker color={colData.color} onChange={handleChangeColor} />
+            <div className={styles.dataPicker}>
+              <ColorPicker color={colData.color} onChange={handleChangeColor} />
+            </div>
             <div className={styles.input}>
               <Input
                 label="New collection name"
@@ -76,7 +85,8 @@ const NewCollectionModal = (props) => {
           </div>
         </div>
         <div className={styles.buttonsContainer}>
-          <Button label="create" variant="primary" onClick={handleSubmit} />
+          {!editMode() && <Button label="create" variant="primary" onClick={handleSubmit} />}
+          {editMode() && <Button label="update" variant="primary" onClick={handleSubmit} />}
           <Button label="cancel" variant="secondary" onClick={handleCloseModal} />
         </div>
       </div>
@@ -95,6 +105,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     closeModal: () => dispatch({ type: taskerTypes.MODAL_CLOSE }),
     setRefresh: (value) => dispatch({ type: taskerTypes.SET_REFRESH, payload: value }),
+    setRefreshColection: (value) =>
+      dispatch({ type: taskerTypes.SET_REFRESH_COLECTION, payload: value }),
     cleanEditValues: () => dispatch({ type: taskerTypes.CLEAN_EDIT_MODAL_FORM }),
   };
 };

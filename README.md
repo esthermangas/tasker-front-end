@@ -4,14 +4,13 @@ This is the frontend part of a two-repositories project. This project is an atte
 Just already is in construction.
 
 ##Libraries
-- React.
-- react-router.
-- react-icons.
-- react-select.
-- classNames.
-- date-fns.
-- material UI.
-- react-datepicker.
+- React
+- react-router
+- react-icons
+- react-select
+- classnames
+- date-fns
+- material UI
 
 ## Available Scripts
 

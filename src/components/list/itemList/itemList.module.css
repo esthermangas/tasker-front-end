@@ -1,7 +1,6 @@
 .root {
     max-width: 200px;
     display: flex;
-    flex-wrap: wrap;
     padding: 12px;
     box-sizing: border-box;
     align-items: center;
@@ -15,3 +14,4 @@
     transition-duration: 200ms;
     background-color: #3d3d43;
 }
+

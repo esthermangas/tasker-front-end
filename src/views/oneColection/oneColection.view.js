@@ -15,7 +15,7 @@ import taskerTypes from '../../context/types';
 import { iconsMapDisplay } from '../../utils/icons';
 
 const OneColection = (props) => {
-  const { setRefreshContext, openModal, editModal } = props;
+  const { setRefreshContext, openModal, editModal, refreshColection, setRefreshColection } = props;
   const history = useHistory();
   const [refresh, setRefresh] = useState(false);
   const { id } = useParams();
@@ -39,11 +39,14 @@ const OneColection = (props) => {
     setAnchorEl(null);
   };
   useEffect(() => {
-    fetchResource('GET', `colection/${id}`, {}, {}).then((res) => {
-      setColection(res);
-      setRefresh(true);
-    });
-  }, [id]);
+    if (refreshColection) {
+      fetchResource('GET', `colection/${id}`, {}, {}).then((res) => {
+        setColection(res);
+        setRefresh(true);
+        setRefreshColection(false);
+      });
+    }
+  }, [refreshColection]);
   useEffect(() => {
     if (refresh) {
       fetchResource('GET', 'task', {}, { colection: id }).then((res) => {
@@ -221,12 +224,20 @@ const OneColection = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    refreshColection: state.refreshColection,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setRefreshContext: (value) => dispatch({ type: taskerTypes.SET_REFRESH, payload: value }),
     editModal: (colection) => dispatch({ type: taskerTypes.EDIT_MODAL_FORM, payload: colection }),
     openModal: (value) => dispatch({ type: taskerTypes.MODAL_OPEN, payload: value }),
+    setRefreshColection: (value) =>
+      dispatch({ type: taskerTypes.SET_REFRESH_COLECTION, payload: value }),
   };
 };
 
-export default connect(null, mapDispatchToProps)(OneColection);
+export default connect(mapStateToProps, mapDispatchToProps)(OneColection);

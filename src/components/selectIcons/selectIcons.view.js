@@ -4,7 +4,6 @@ import styles from './selectIcons.module.css';
 
 const Select = (props) => {
   const { value, onChange } = props;
-
   const selectValue = iconsMap[value];
   return (
     <ReactSelect
