@@ -1,27 +1,28 @@
 .default {
     letter-spacing: 1px;
-    width: 100px;
-    font-size: 16px;
+    min-width: 80px;
+    font-size: 14px;
     min-height: 20px;
     border: none;
-    padding: 10px;
+    padding: 6px;
     box-sizing: border-box;
     border-radius: 6px;
     color: white;
     font-weight: bold;
+    font-family: Raleway, sans-serif;
 }
 .default:focus {
     outline: none;
 }
 
 .big {
-    width: 140px;
+    min-width: 140px;
     font-size: 18px;
     min-height: 25px;
 }
 .small {
     font-size: 14px !important;
-    width: 70px;
+    min-width: 70px;
     min-height: 15px;
 }
 

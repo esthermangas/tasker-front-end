@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FiChevronLeft, FiMoreVertical, FiPlus } from 'react-icons/all';
-import { DatePicker } from '@material-ui/pickers';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 import { Menu, MenuItem } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/styles';
+import { format } from 'date-fns';
 import Item from '../../components/accordion/item/item.view';
 import styles from './oneColection.module.css';
 import fetchResource from '../../utils/fetchResource';
@@ -13,15 +14,25 @@ import Input from '../../components/input';
 import Button from '../../components/button';
 import taskerTypes from '../../context/types';
 import { iconsMapDisplay } from '../../utils/icons';
+import DatePickerTask from '../../utils/datePicker';
 
+const useStyles = makeStyles({
+  input: {
+    root: {
+      color: 'white',
+    },
+  },
+});
 const OneColection = (props) => {
   const { setRefreshContext, openModal, editModal, refreshColection, setRefreshColection } = props;
+  const classes = useStyles();
   const history = useHistory();
   const [refresh, setRefresh] = useState(false);
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
   const [colection, setColection] = useState({});
   const [taskModal, setTaskModal] = useState(false);
+  const [openDatePicker, setOpenDatePicker] = useState(false);
   const [data, setData] = useState({
     description: '',
     date: new Date(),
@@ -78,32 +89,23 @@ const OneColection = (props) => {
       setRefresh(true);
     });
   };
-  const ref = useRef();
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setTaskModal(false);
-        setData({ ...data, description: '', date: new Date() });
-      }
-    };
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  }, []);
   const openTaskModal = () => {
     setTaskModal(true);
   };
   const handleChangeDescription = (e) => {
     setData({ ...data, description: e.target.value });
   };
+  const handleAccept = (date) => {
+    setData({ ...data, date });
+    setOpenDatePicker(false);
+  };
   const handleChangeDate = (date) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     setData({ ...data, date });
   };
   const handleSaveTask = () => {
-    fetchResource('POST', 'task', { body: data }, {}).then(() => {
+    const finalBody = { ...data, date: format(data.date, 'yyyy-MM-dd') };
+    fetchResource('POST', 'task', { body: finalBody }, {}).then(() => {
+      setRefreshContext(true);
       setRefresh(true);
       setTaskModal(false);
     });
@@ -170,12 +172,23 @@ const OneColection = (props) => {
           </div>
         )}
         {taskModal && (
-          <div className={styles.addOpen} ref={ref}>
+          <div className={styles.addOpen}>
             <div className={styles.inputsModal}>
               <div className={styles.input}>
-                <Input label="Task" value={data.name} onChange={handleChangeDescription} />
+                <Input label="Task" value={data.description} onChange={handleChangeDescription} />
               </div>
-              <DatePicker value={data.date} onAccept={handleChangeDate} inputVariant="outlined" />
+              <div className={styles.input}>
+                <DatePickerTask
+                  value={data.date}
+                  onAccept={handleAccept}
+                  inputVariant="outlined"
+                  open={openDatePicker}
+                  onChange={handleChangeDate}
+                  onOpen={() => setOpenDatePicker(true)}
+                  onClose={() => setOpenDatePicker(false)}
+                  inputProps={{ className: classes.root }}
+                />
+              </div>
             </div>
             <div className={styles.buttons}>
               <Button label="SAVE" onClick={handleSaveTask} variant="primary" />

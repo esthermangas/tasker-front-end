@@ -3,9 +3,10 @@ import { format, isSameDay } from 'date-fns';
 import { connect } from 'react-redux';
 import styles from './calendarDay.module.css';
 import { iconsMapDisplay } from '../../../utils/icons';
+import taskerTypes from '../../../context/types';
 
 const CalendarDay = (props) => {
-  const { day, month, tasks, colections } = props;
+  const { day, month, tasks, colections, openTaskModal } = props;
   const dayStyles = {};
   if (day.getMonth() === month.getMonth()) {
     dayStyles.backgroundColor = '#222831';
@@ -27,8 +28,11 @@ const CalendarDay = (props) => {
 
     tasksByColection[task.colection].push(task);
   });
+  const handleOpenTaskModal = () => {
+    openTaskModal(day);
+  };
   return (
-    <div className={styles.bodyDay} style={dayStyles}>
+    <div className={styles.bodyDay} style={dayStyles} onClick={handleOpenTaskModal}>
       <div className={styles.content}>
         {actualDay && <span className={styles.numberBall}>{format(day, 'dd')}</span>}
         {!actualDay && format(day, 'dd')}
@@ -59,4 +63,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(CalendarDay);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openTaskModal: (day) => dispatch({ type: taskerTypes.OPEN_CALENDAR_MODAL, payload: day }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarDay);

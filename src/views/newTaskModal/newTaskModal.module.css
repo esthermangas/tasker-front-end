@@ -1,0 +1,36 @@
+.modalContainer{
+    width: 500px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    box-sizing: border-box;
+}
+.dataContainer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.data{
+    display: flex;
+    margin: 0 10px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.input {
+    display: flex;
+    margin: 0 10px;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonsContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}

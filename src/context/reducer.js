@@ -8,6 +8,8 @@ const initialState = {
   toEditColection: {},
   tasks: [],
   refreshColection: true,
+  calendarModal: { open: false, day: new Date() },
+  refreshCalendar: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -45,6 +47,15 @@ const reducer = (state = initialState, action) => {
       return newState;
     case taskerTypes.SET_REFRESH_COLECTION:
       newState.refreshColection = action.payload;
+      return newState;
+    case taskerTypes.OPEN_CALENDAR_MODAL:
+      newState.calendarModal = { open: true, day: action.payload };
+      return newState;
+    case taskerTypes.CLOSE_CALENDAR_MODAL:
+      newState.calendarModal = { open: false, day: new Date() };
+      return newState;
+    case taskerTypes.SET_REFRESH_CALENDAR:
+      newState.refreshCalendar = action.payload;
       return newState;
     default:
       return newState;

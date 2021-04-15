@@ -17,7 +17,7 @@ import Avatar from '../../../components/avatar';
 import SearchBar from '../../../components/searchBar';
 
 const NavBar = (props) => {
-  const { openDrawer, openModal, refreshColections } = props;
+  const { openDrawer, openModal, refreshColections, refreshCalendar } = props;
   const history = useHistory();
   const [openMenu, setOpenMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -46,6 +46,7 @@ const NavBar = (props) => {
   };
   const handleClickCalendarView = () => {
     history.push('/app/calendar');
+    refreshCalendar(true);
   };
   const userInfo = getUserSession('userSession');
   const name = `${userInfo.user.firstName} ${userInfo.user.lastName}`;
@@ -115,6 +116,7 @@ const mapDispatchToProps = (dispatch) => {
     openDrawer: () => dispatch({ type: taskerTypes.TOGGLE_DRAWER }),
     openModal: () => dispatch({ type: taskerTypes.MODAL_OPEN }),
     refreshColections: () => dispatch({ type: taskerTypes.SET_REFRESH, payload: true }),
+    refreshCalendar: () => dispatch({ type: taskerTypes.SET_REFRESH_CALENDAR, payload: true }),
   };
 };
 

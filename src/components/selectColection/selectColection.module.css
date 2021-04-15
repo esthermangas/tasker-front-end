@@ -1,0 +1,7 @@
+.select {
+    width: 280px;
+}
+.select:focus{
+    outline: none;
+    border: 1px solid #f2a365;
+}

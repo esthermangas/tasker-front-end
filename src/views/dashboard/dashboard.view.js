@@ -6,6 +6,7 @@ import Accordion from '../../components/accordion';
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [colections, setColections] = useState([]);
   const [groupedTasks, setGroupedTasks] = useState({});
   const [refresh, setRefresh] = useState(true);
@@ -21,6 +22,7 @@ const Dashboard = () => {
         }
       ).then((res) => {
         setTasks(res);
+        setLoading(true);
         setRefresh(false);
       });
     }
@@ -48,7 +50,7 @@ const Dashboard = () => {
   };
   return (
     <>
-      {tasks.length > 0 && (
+      {loading && tasks.length > 0 && (
         <div>
           {colections.map((colection) => (
             <Accordion
@@ -59,7 +61,9 @@ const Dashboard = () => {
           ))}
         </div>
       )}
-      {tasks.length === 0 && <div className={styles.infoRoot}>{infoSentenceNotTask}</div>}
+      {loading && tasks.length === 0 && (
+        <div className={styles.infoRoot}>{infoSentenceNotTask}</div>
+      )}
     </>
   );
 };

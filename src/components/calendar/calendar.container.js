@@ -6,7 +6,7 @@ import fetchResource from '../../utils/fetchResource';
 import taskerTypes from '../../context/types';
 
 const CalendarContainer = (props) => {
-  const { setTasks } = props;
+  const { setTasks, refreshCalendar, refresh } = props;
   const [month, setMonth] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const handleAddMonth = () => {
@@ -20,11 +20,14 @@ const CalendarContainer = (props) => {
   const from = format(startOfMonth(month), 'yyyy-MM-dd');
   const to = format(endOfMonth(month), 'yyyy-MM-dd');
   useEffect(() => {
-    fetchResource('GET', 'task', {}, { from, to }).then((res) => {
-      setTasks(res);
-      setLoading(false);
-    });
-  }, [month]);
+    if (refreshCalendar) {
+      fetchResource('GET', 'task', {}, { from, to }).then((res) => {
+        setTasks(res);
+        setLoading(false);
+        refresh(false);
+      });
+    }
+  }, [refreshCalendar, month]);
   return (
     !loading && (
       <CalendarView month={month} onAddMonth={handleAddMonth} onSubMonth={handleSubMonth} />
@@ -34,13 +37,13 @@ const CalendarContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    refresh: state.refresh,
+    refreshCalendar: state.refreshCalendar,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setRefresh: (value) => dispatch({ type: taskerTypes.SET_REFRESH, payload: value }),
+    refresh: (value) => dispatch({ type: taskerTypes.SET_REFRESH_CALENDAR, payload: value }),
     setTasks: (res) => dispatch({ type: taskerTypes.SET_TASKS, payload: res }),
   };
 };

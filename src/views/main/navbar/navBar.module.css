@@ -55,7 +55,7 @@
 
 .specialButton:hover{
     transform: scale(1.1);
-    background: linear-gradient(45deg, hsla(323, 78%, 53%, 1) 28%, hsla(29, 74%, 69%, 1) 100%);
+    background: linear-gradient(45deg, hsl(323, 78%, 53%) 28%, hsl(29, 74%, 69%) 100%);
     cursor: pointer;
 }
 .icons{
