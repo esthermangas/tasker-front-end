@@ -9,7 +9,7 @@
 .formContainer {
     border-radius: 5%;
     width: 500px;
-    height: 450px;
+    height: fit-content;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -26,7 +26,6 @@
 
 .input {
     margin-bottom: 15px;
-    min-height: 70px;
     width: 100%;
 }
 
@@ -48,4 +47,5 @@ a {
 
 .logo {
     width: 200px;
+    height: fit-content;
 }

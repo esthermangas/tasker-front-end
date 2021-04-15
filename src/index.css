@@ -6,6 +6,11 @@ body, html, #root .App {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-bottom: 60px;
+  background-color: #15171d;
+}
+
+#root{
+  height: 100%;
 }
 
 code {
