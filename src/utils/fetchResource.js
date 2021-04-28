@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import { getToken } from './sesion';
 
 const API_URL =
-  window.location.hostname === 'tasker.netlify.app'
+  window.location.hostname === 'esther-tasker.netlify.app'
     ? 'https://https://esther-tasker.herokuapp.com'
     : 'http://localhost:3001';
 
