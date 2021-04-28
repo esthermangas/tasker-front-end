@@ -38,7 +38,7 @@ const LogIn = () => {
     <div className={styles.root}>
       <div className={styles.formContainer}>
         <TaskerLogo className={styles.logo} />
-        <h1 className={styles.title}>Log In</h1>
+        <h3 className={styles.title}>Log In</h3>
         <div className={styles.input}>
           <Input
             label="Email"

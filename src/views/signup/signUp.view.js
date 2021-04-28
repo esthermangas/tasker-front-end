@@ -47,7 +47,7 @@ const SignUp = () => {
     <div className={styles.root}>
       <div className={styles.formContainer}>
         <TaskerLogo className={styles.logo} />
-        <h1 className={styles.title}>Sign Up</h1>
+        <h3 className={styles.title}>Sign Up</h3>
         <div className={styles.nameDiv}>
           <div className={styles.nameInput}>
             <Input
