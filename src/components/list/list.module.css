@@ -1,5 +1,6 @@
 .root {
     max-width: 200px;
+    min-width: 200px;
     height: 100%;
     color: white;
     box-sizing: border-box;
