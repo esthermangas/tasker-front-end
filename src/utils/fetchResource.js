@@ -1,7 +1,10 @@
 import queryString from 'query-string';
 import { getToken } from './sesion';
 
-const API_URL = 'http://localhost:3001';
+const API_URL =
+  window.location.hostname === 'tasker.netlify.app'
+    ? 'https://https://esther-tasker.herokuapp.com'
+    : 'http://localhost:3001';
 
 // Custom API error to throw
 function ApiError(message, data, status) {
