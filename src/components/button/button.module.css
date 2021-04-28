@@ -30,8 +30,7 @@
     background: linear-gradient(45deg, hsla(323, 78%, 53%, 1) 28%, hsla(29, 74%, 69%, 1) 100%);
 }
 .primary:hover {
-    transform: scale(1.1);
-    background: linear-gradient(45deg, hsl(323, 78%, 53%) 28%, hsla(29, 74%, 69%, 1) 100%);
+    background: linear-gradient(45deg, hsla(29, 74%, 69%, 1) 28%,hsl(323, 78%, 53%)  100%);
     cursor: pointer;
 }
 
@@ -40,6 +39,6 @@
 }
 .secondary:hover {
     cursor: pointer;
-    background-color: #545256;
+    background-color: #323232;
     transition-duration: 200ms;
 }

@@ -11,7 +11,7 @@ const Input = (props) => {
     }
   }, [value]);
   const inputClass = classNames(styles.input, {
-    [styles.error]: error,
+    [styles.error]: error !== undefined && Object.values(error).length > 0,
     [styles.activeInput]: active,
   });
   const labelClass = classNames(styles.label, {

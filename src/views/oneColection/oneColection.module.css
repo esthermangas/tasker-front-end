@@ -44,62 +44,27 @@
     letter-spacing: 2px;
     margin-left: 6px;
 }
-
 .add {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
-.addMoreTask{
+.addTask {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    letter-spacing: 2px;
-    padding: 8px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    color: #a4a3a3;
-    border: solid 1px #636066;
-    width: 100%;
-}
-.addMoreTask:hover{
-    background-color: #26252b;
-    cursor: pointer;
-    transition-duration: 100ms;
-}
-.addTaskIcon{
-    width:25px;
-    height: 25px;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    padding: 4px;
-    color: white;
-    border-radius: 8px;
-    box-sizing: border-box;
-    margin-right: 8px;
-    background: linear-gradient(45deg, hsla(323, 78%, 53%, 1) 28%, hsla(29, 74%, 69%, 1) 100%);
-}
-
-.addOpen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 8px;
     box-sizing: border-box;
     border-radius: 10px;
     color: #a4a3a3;
     border: solid 1px #636066;
     width: 100%;
     height: 100%;
+    padding: 3px 16px;
+    align-items: center;
 }
 .inputsModal {
     display: flex;
-    width: 100%;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+    width: 100%;;
     margin: 10px 0;
 }
 
@@ -112,11 +77,9 @@
 
 .buttons {
     display: flex;
-    flex-direction: row;
-    width: 70%;
+    flex-direction: column;
     justify-content: space-evenly;
 }
-
 
 .tasksContainer{
     height: 100%;

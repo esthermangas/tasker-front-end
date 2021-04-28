@@ -10,18 +10,30 @@ import { setUserSession } from '../../utils/sesion';
 const LogIn = () => {
   const history = useHistory();
   const [data, setData] = useState({ email: '', password: '' });
-  const [bknError, setBknError] = useState({});
+  const [errors, setErrors] = useState({});
   const handleChangeInput = (e, key) => {
+    if (key === 'email') {
+      setErrors({ ...errors, emailError: '' });
+    }
     setData({ ...data, [key]: e.target.value });
   };
-  const handleLogIn = () => {
-    fetchResource('POST', 'login', { body: data })
-      .then((res) => {
-        setUserSession(res);
-        history.push('/app');
-      })
-      .catch((apiError) => setBknError(apiError.response));
+  const emailRegex = /\S+@\S+\.\S+/;
+  const validateEmail = (email) => {
+    return emailRegex.test(email);
   };
+  const handleLogIn = () => {
+    if (validateEmail(data.email)) {
+      fetchResource('POST', 'login', { body: data })
+        .then((res) => {
+          setUserSession(res);
+          history.push('/app');
+        })
+        .catch((apiError) => setErrors({ ...errors, ...apiError.response }));
+    } else {
+      setErrors({ ...errors, emailError: 'Enter a valid email' });
+    }
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.formContainer}>
@@ -33,7 +45,7 @@ const LogIn = () => {
             size="big"
             value={data.email}
             onChange={(e) => handleChangeInput(e, 'email')}
-            error={bknError.error && bknError.error.email}
+            error={errors && errors.emailError}
           />
         </div>
         <div className={styles.input}>
@@ -43,7 +55,7 @@ const LogIn = () => {
             size="big"
             value={data.password}
             onChange={(e) => handleChangeInput(e, 'password')}
-            error={bknError.error && bknError.error.password}
+            error={errors && errors.password}
           />
         </div>
         <div className={styles.button}>

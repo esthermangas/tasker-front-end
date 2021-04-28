@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { FiChevronLeft, FiMoreVertical, FiPlus } from 'react-icons/all';
+import { FiChevronLeft, FiMoreVertical } from 'react-icons/all';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 import { Menu, MenuItem } from '@material-ui/core';
@@ -31,13 +31,11 @@ const OneColection = (props) => {
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
   const [colection, setColection] = useState({});
-  const [taskModal, setTaskModal] = useState(false);
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [data, setData] = useState({
     description: '',
     date: new Date(),
     colection: id,
-    done: false,
   });
   const [openOptions, setOpenOptions] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -89,9 +87,6 @@ const OneColection = (props) => {
       setRefresh(true);
     });
   };
-  const openTaskModal = () => {
-    setTaskModal(true);
-  };
   const handleChangeDescription = (e) => {
     setData({ ...data, description: e.target.value });
   };
@@ -107,12 +102,7 @@ const OneColection = (props) => {
     fetchResource('POST', 'task', { body: finalBody }, {}).then(() => {
       setRefreshContext(true);
       setRefresh(true);
-      setTaskModal(false);
     });
-  };
-  const handleCloseModalTask = () => {
-    setTaskModal(false);
-    setData({ ...data, description: '', date: new Date() });
   };
   const handleDeleteColection = () => {
     fetchResource('DELETE', `colection/${id}`, {}, {}).then(() => {
@@ -160,42 +150,31 @@ const OneColection = (props) => {
           <MenuItem onClick={handleDeleteColection}>Delete</MenuItem>
         </Menu>
       </div>
-      <div>
-        {!taskModal && (
-          <div className={styles.add} onClick={openTaskModal}>
-            <div className={styles.addMoreTask}>
-              <span className={styles.addTaskIcon}>
-                <FiPlus size="18px" />
-              </span>
-              <div>Add a task</div>
+      <div className={styles.add}>
+        <div className={styles.addTask}>
+          <div className={styles.inputsModal}>
+            <div className={styles.input}>
+              <Input label="Task" value={data.description} onChange={handleChangeDescription} />
+            </div>
+            <div className={styles.input}>
+              <DatePickerTask
+                value={data.date}
+                onAccept={handleAccept}
+                inputVariant="outlined"
+                open={openDatePicker}
+                onChange={handleChangeDate}
+                onOpen={() => setOpenDatePicker(true)}
+                onClose={() => setOpenDatePicker(false)}
+                inputProps={{ className: classes.root }}
+              />
             </div>
           </div>
-        )}
-        {taskModal && (
-          <div className={styles.addOpen}>
-            <div className={styles.inputsModal}>
-              <div className={styles.input}>
-                <Input label="Task" value={data.description} onChange={handleChangeDescription} />
-              </div>
-              <div className={styles.input}>
-                <DatePickerTask
-                  value={data.date}
-                  onAccept={handleAccept}
-                  inputVariant="outlined"
-                  open={openDatePicker}
-                  onChange={handleChangeDate}
-                  onOpen={() => setOpenDatePicker(true)}
-                  onClose={() => setOpenDatePicker(false)}
-                  inputProps={{ className: classes.root }}
-                />
-              </div>
-            </div>
-            <div className={styles.buttons}>
+          <div className={styles.buttons}>
+            <div className={styles.button}>
               <Button label="SAVE" onClick={handleSaveTask} variant="primary" />
-              <Button label="CANCEL" onClick={handleCloseModalTask} variant="secondary" />
             </div>
           </div>
-        )}
+        </div>
       </div>
       <div className={styles.tasksContainer}>
         {notCompleteTasks.length > 0 && (

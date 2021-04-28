@@ -16,7 +16,7 @@ function App() {
           <Router>
             <Switch>
               <Route exact path="/login" component={LogIn} />
-              <Route path="/signup" component={SignUp} />
+              <Route exact path="/signup" component={SignUp} />
               <PrivateRoute path="/app" component={Main} />
               <Redirect from="/" to="/login" />
             </Switch>

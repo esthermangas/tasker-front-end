@@ -10,28 +10,38 @@ import { setUserSession } from '../../utils/sesion';
 const SignUp = () => {
   const history = useHistory();
   const [data, setData] = useState({ firstName: '', lastName: '', email: '', password: '' });
-  const [error, setError] = useState('');
-  const [bknError, setBknError] = useState({});
+  const [errors, setErrors] = useState({});
   const [confirmPassword, setConfirmPassword] = useState('');
   useEffect(() => {
     if (data.password && data.password !== confirmPassword) {
-      setError('The passwords not matches');
+      setErrors({ ...errors, confirmPassword: 'The passwords not matches' });
     }
   }, []);
 
   const handleChangeInput = (e, key) => {
+    if (key === 'email') {
+      setErrors({ ...errors, emailError: '' });
+    }
     setData({ ...data, [key]: e.target.value });
   };
   const handleChangeConfirmPassword = (e) => {
     setConfirmPassword(e.target.value);
   };
+  const emailRegex = /\S+@\S+\.\S+/;
+  const validateEmail = (email) => {
+    return emailRegex.test(email);
+  };
   const handleSubmit = () => {
-    fetchResource('POST', 'register', { body: data })
-      .then((res) => {
-        setUserSession(res);
-        history.push('/home');
-      })
-      .catch((apiError) => setBknError(apiError.response));
+    if (validateEmail(data.email)) {
+      fetchResource('POST', 'register', { body: data })
+        .then((res) => {
+          setUserSession(res);
+          history.push('/app');
+        })
+        .catch((apiError) => setErrors({ ...errors, ...apiError.response }));
+    } else {
+      setErrors({ ...errors, emailError: 'Enter a valid email' });
+    }
   };
   return (
     <div className={styles.root}>
@@ -44,6 +54,7 @@ const SignUp = () => {
               label="Name"
               value={data.firstName}
               onChange={(e) => handleChangeInput(e, 'firstName')}
+              error={errors && errors.name}
             />
           </div>
           <div className={styles.nameInput}>
@@ -51,6 +62,7 @@ const SignUp = () => {
               label="Last Name"
               value={data.lastName}
               onChange={(e) => handleChangeInput(e, 'lastName')}
+              errors={errors && errors.lastName}
             />
           </div>
         </div>
@@ -59,7 +71,7 @@ const SignUp = () => {
             label="Email"
             value={data.email}
             onChange={(e) => handleChangeInput(e, 'email')}
-            error={bknError.error && bknError.error.email}
+            error={errors && errors.emailError}
           />
         </div>
         <div className={styles.input}>
@@ -68,6 +80,7 @@ const SignUp = () => {
             type="password"
             value={data.password}
             onChange={(e) => handleChangeInput(e, 'password')}
+            error={errors && errors.password}
           />
         </div>
         <div className={styles.input}>
@@ -75,7 +88,7 @@ const SignUp = () => {
             label="Confirm password"
             type="password"
             size="big"
-            error={error}
+            error={errors && errors.confirmPassword}
             value={confirmPassword}
             onChange={handleChangeConfirmPassword}
           />
