@@ -3,7 +3,7 @@ import { getToken } from './sesion';
 
 const API_URL =
   window.location.hostname === 'esther-tasker.netlify.app'
-    ? 'https://https://esther-tasker.herokuapp.com'
+    ? 'https://esther-tasker.herokuapp.com'
     : 'http://localhost:3001';
 
 // Custom API error to throw
