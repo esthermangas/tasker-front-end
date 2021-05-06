@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FiChevronLeft, FiMoreVertical } from 'react-icons/all';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -27,7 +27,6 @@ const OneColection = (props) => {
   const { setRefreshContext, openModal, editModal, refreshColection, setRefreshColection } = props;
   const classes = useStyles();
   const history = useHistory();
-  const inputRef = useRef(null);
   const [refresh, setRefresh] = useState(false);
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
@@ -172,7 +171,6 @@ const OneColection = (props) => {
                 value={data.description}
                 onChange={handleChangeDescription}
                 error={error.description}
-                ref={inputRef}
               />
             </div>
             <div className={styles.input}>
