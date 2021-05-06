@@ -17,7 +17,7 @@ import Avatar from '../../../components/avatar';
 import SearchBar from '../../../components/searchBar';
 
 const NavBar = (props) => {
-  const { openDrawer, openModal, refreshColections, refreshCalendar } = props;
+  const { openDrawer, openModal, refreshColections, refreshCalendar, cleanContext } = props;
   const history = useHistory();
   const [openMenu, setOpenMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -32,7 +32,9 @@ const NavBar = (props) => {
   const handleLogOut = () => {
     localStorage.removeItem('userSession');
     handleCloseMenu();
+    cleanContext();
     history.push('/login');
+
   };
   const handleProfile = () => {
     handleCloseMenu();
@@ -117,6 +119,7 @@ const mapDispatchToProps = (dispatch) => {
     openModal: () => dispatch({ type: taskerTypes.MODAL_OPEN }),
     refreshColections: () => dispatch({ type: taskerTypes.SET_REFRESH, payload: true }),
     refreshCalendar: () => dispatch({ type: taskerTypes.SET_REFRESH_CALENDAR, payload: true }),
+    cleanContext: () => dispatch({ type: taskerTypes.CLEAN_CONTEXT }),
   };
 };
 

@@ -57,6 +57,8 @@ const reducer = (state = initialState, action) => {
     case taskerTypes.SET_REFRESH_CALENDAR:
       newState.refreshCalendar = action.payload;
       return newState;
+    case taskerTypes.CLEAN_CONTEXT:
+      return { ...initialState };
     default:
       return newState;
   }
