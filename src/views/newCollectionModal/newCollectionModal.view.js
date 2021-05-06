@@ -67,6 +67,7 @@ const NewCollectionModal = (props) => {
           color: colData.color,
         };
         fetchResource('PATCH', `colection/${editData.id}`, { body: finalData }, {}).then(() => {
+          setRefresh(true);
           setRefreshColection(true);
           cleanEditValues();
           closeModal();
