@@ -34,7 +34,6 @@ const NavBar = (props) => {
     handleCloseMenu();
     cleanContext();
     history.push('/login');
-
   };
   const handleProfile = () => {
     handleCloseMenu();
