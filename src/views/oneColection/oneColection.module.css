@@ -71,14 +71,15 @@
 .input{
     width: 240px;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
 .buttons {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
+    height: 38px;
+    margin-left: 16px;
 }
 
 .tasksContainer{

@@ -72,7 +72,10 @@
 }
 
 .editModal{
-    background-color: #f2a365;
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
 }
 .inputsModal {
     display: flex;
@@ -87,9 +90,13 @@
     width: 50%;
 }
 
+.button {
+    margin-right: 40px;
+}
+
 .buttons {
     display: flex;
     flex-direction: row;
-    width: 70%;
-    justify-content: space-evenly;
+    width: 100%;
+    justify-content: center;
 }

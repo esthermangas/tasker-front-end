@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { FiCheck, FiEdit, FiTrash2 } from 'react-icons/fi';
 import format from 'date-fns/format';
-import { DatePicker } from '@material-ui/pickers';
 import styles from './item.module.css';
 import Input from '../../input';
 import Button from '../../button';
+import DatePickerTask from '../../../utils/datePicker';
 
 const Item = (props) => {
   const { task, onCheck, onDelete, onEdit, ...rest } = props;
@@ -27,9 +27,6 @@ const Item = (props) => {
     }
   };
   const handleEdit = () => {
-    // eslint-disable-next-line no-console
-    console.log('llega');
-    console.log(task.date);
     setEditMode(true);
   };
   const handleDelete = () => {
@@ -70,11 +67,19 @@ const Item = (props) => {
             <div className={styles.input}>
               <Input label="Task" value={editData.description} onChange={handleChangeDescription} />
             </div>
-            <DatePicker value={editData.date} onChange={handleChangeDate} inputVariant="outlined" />
+            <DatePickerTask
+              value={editData.date}
+              onChange={handleChangeDate}
+              inputVariant="outlined"
+            />
           </div>
           <div className={styles.buttons}>
-            <Button label="SAVE" onClick={handleSave} variant="primary" />
-            <Button label="CANCEL" onClick={handleCloseEditMode} variant="secondary" />
+            <div className={styles.button}>
+              <Button label="SAVE" onClick={handleSave} variant="primary" />
+            </div>
+            <div>
+              <Button label="CANCEL" onClick={handleCloseEditMode} variant="secondary" />
+            </div>
           </div>
         </div>
       )}

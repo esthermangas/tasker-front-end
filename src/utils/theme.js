@@ -70,6 +70,7 @@ const defaultTheme = createMuiTheme({
         letterSpacing: '1px',
         fontWeight: '500',
         cursor: 'pointer',
+        color: 'white',
       },
     },
     MuiInputBase: {

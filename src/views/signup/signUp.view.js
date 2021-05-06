@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styles from './signUp.module.css';
 import Input from '../../components/input';
@@ -9,38 +9,52 @@ import { setUserSession } from '../../utils/sesion';
 
 const SignUp = () => {
   const history = useHistory();
-  const [data, setData] = useState({ firstName: '', lastName: '', email: '', password: '' });
+  const [data, setData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
   const [errors, setErrors] = useState({});
-  const [confirmPassword, setConfirmPassword] = useState('');
-  useEffect(() => {
-    if (data.password && data.password !== confirmPassword) {
-      setErrors({ ...errors, confirmPassword: 'The passwords not matches' });
-    }
-  }, []);
 
   const handleChangeInput = (e, key) => {
-    if (key === 'email') {
-      setErrors({ ...errors, emailError: '' });
-    }
+    setErrors({ ...errors, [key]: '' });
     setData({ ...data, [key]: e.target.value });
   };
-  const handleChangeConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-  };
   const emailRegex = /\S+@\S+\.\S+/;
-  const validateEmail = (email) => {
-    return emailRegex.test(email);
+  const validateData = (dataToValidate) => {
+    const validationErrors = {};
+    if (!dataToValidate.firstName) {
+      validationErrors.firstName = 'A user must have a name';
+    }
+    if (!dataToValidate.lastName) {
+      validationErrors.lastName = 'A user must have a last name';
+    }
+    if (!emailRegex.test(dataToValidate.email)) {
+      validationErrors.email = 'Enter a valid email';
+    }
+    if (!dataToValidate.password) {
+      validationErrors.password = 'Enter a password';
+    }
+    if (dataToValidate.password !== dataToValidate.confirmPassword) {
+      validationErrors.confirmPassword = 'The passwords do not match';
+    }
+    return validationErrors;
   };
   const handleSubmit = () => {
-    if (validateEmail(data.email)) {
+    const validationErrors = validateData(data);
+    if (Object.keys(validationErrors).length === 0) {
       fetchResource('POST', 'register', { body: data })
         .then((res) => {
           setUserSession(res);
           history.push('/app');
         })
-        .catch((apiError) => setErrors({ ...errors, ...apiError.response }));
+        .catch((apiError) => {
+          setErrors({ ...apiError.response });
+        });
     } else {
-      setErrors({ ...errors, emailError: 'Enter a valid email' });
+      setErrors({ ...validationErrors });
     }
   };
   return (
@@ -54,7 +68,7 @@ const SignUp = () => {
               label="Name"
               value={data.firstName}
               onChange={(e) => handleChangeInput(e, 'firstName')}
-              error={errors && errors.name}
+              error={errors && errors.firstName}
             />
           </div>
           <div className={styles.nameInput}>
@@ -62,7 +76,7 @@ const SignUp = () => {
               label="Last Name"
               value={data.lastName}
               onChange={(e) => handleChangeInput(e, 'lastName')}
-              errors={errors && errors.lastName}
+              error={errors && errors.lastName}
             />
           </div>
         </div>
@@ -71,7 +85,7 @@ const SignUp = () => {
             label="Email"
             value={data.email}
             onChange={(e) => handleChangeInput(e, 'email')}
-            error={errors && errors.emailError}
+            error={errors && errors.email}
           />
         </div>
         <div className={styles.input}>
@@ -89,8 +103,8 @@ const SignUp = () => {
             type="password"
             size="big"
             error={errors && errors.confirmPassword}
-            value={confirmPassword}
-            onChange={handleChangeConfirmPassword}
+            value={data.confirmPassword}
+            onChange={(e) => handleChangeInput(e, 'confirmPassword')}
           />
         </div>
         <div className={styles.button}>

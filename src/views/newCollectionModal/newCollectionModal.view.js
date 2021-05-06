@@ -19,6 +19,7 @@ const NewCollectionModal = (props) => {
     cleanEditValues,
   } = props;
   const [colData, setColData] = useState({ icon: '', name: '', color: '#e21b1b' });
+  const [error, setError] = useState({});
   const editMode = () => {
     return Object.keys(editData).length > 0;
   };
@@ -42,27 +43,38 @@ const NewCollectionModal = (props) => {
     closeModal();
     setColData({ icon: '', name: '', color: '#e21b1b' });
     cleanEditValues();
+    setError({});
   };
 
   const handleSubmit = () => {
     if (!editMode()) {
-      fetchResource('POST', 'colection', { body: colData }, {}).then(() => {
-        setRefresh(true);
-        closeModal();
-        setColData({ icon: '', name: '', color: '#e21b1b' });
-      });
+      if (colData.name) {
+        fetchResource('POST', 'colection', { body: colData }, {}).then(() => {
+          setRefresh(true);
+          closeModal();
+          setColData({ icon: '', name: '', color: '#e21b1b' });
+          setError({});
+        });
+      } else {
+        setError({ name: 'Collection needs a name' });
+      }
     }
     if (editMode()) {
-      const finalData = {
-        name: colData.name,
-        icon: colData.icon,
-        color: colData.color,
-      };
-      fetchResource('PATCH', `colection/${editData.id}`, { body: finalData }, {}).then(() => {
-        setRefreshColection(true);
-        cleanEditValues();
-        closeModal();
-      });
+      if (colData.name) {
+        const finalData = {
+          name: colData.name,
+          icon: colData.icon,
+          color: colData.color,
+        };
+        fetchResource('PATCH', `colection/${editData.id}`, { body: finalData }, {}).then(() => {
+          setRefreshColection(true);
+          cleanEditValues();
+          closeModal();
+          setError({});
+        });
+      } else {
+        setError({ name: 'Collection needs a name' });
+      }
     }
   };
 
@@ -75,13 +87,14 @@ const NewCollectionModal = (props) => {
             <div className={styles.dataPicker}>
               <ColorPicker color={colData.color} onChange={handleChangeColor} />
             </div>
-            <div className={styles.input}>
-              <Input
-                label="New collection name"
-                value={colData.name}
-                onChange={handleNameCollection}
-              />
-            </div>
+          </div>
+          <div className={styles.input}>
+            <Input
+              label="New collection name"
+              value={colData.name}
+              onChange={handleNameCollection}
+              error={error.name}
+            />
           </div>
         </div>
         <div className={styles.buttonsContainer}>

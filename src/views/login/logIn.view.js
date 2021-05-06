@@ -12,9 +12,8 @@ const LogIn = () => {
   const [data, setData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const handleChangeInput = (e, key) => {
-    if (key === 'email') {
-      setErrors({ ...errors, emailError: '' });
-    }
+    setErrors({ ...errors, [key]: '' });
+
     setData({ ...data, [key]: e.target.value });
   };
   const emailRegex = /\S+@\S+\.\S+/;
@@ -28,9 +27,11 @@ const LogIn = () => {
           setUserSession(res);
           history.push('/app');
         })
-        .catch((apiError) => setErrors({ ...errors, ...apiError.response }));
+        .catch((apiError) => {
+          setErrors({ ...apiError.response.error });
+        });
     } else {
-      setErrors({ ...errors, emailError: 'Enter a valid email' });
+      setErrors({ email: 'Enter a valid email' });
     }
   };
 
@@ -45,7 +46,7 @@ const LogIn = () => {
             size="big"
             value={data.email}
             onChange={(e) => handleChangeInput(e, 'email')}
-            error={errors && errors.emailError}
+            error={errors && errors.email}
           />
         </div>
         <div className={styles.input}>

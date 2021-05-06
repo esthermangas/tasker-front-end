@@ -53,14 +53,14 @@
 }
 
 .error {
-    border: 2px solid darkred;
+    border: 1px solid #ff0000;
 }
 .error:focus {
-    border: 2px solid darkred;
+    border: 1px solid #ff0000;
 }
 
 .spanError {
-    color: darkred;
+    color: #ff0000;
     font-size: 14px;
 }
 

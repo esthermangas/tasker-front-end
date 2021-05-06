@@ -1,9 +1,9 @@
 .modalContainer{
     width: 500px;
-    height: fit-content;
+    height: 160px;
     display: flex;
     flex-direction: column;
-    padding: 40px;
+    padding: 30px;
     box-sizing: border-box;
 }
 .dataContainer{
@@ -24,7 +24,7 @@
 .input {
     display: flex;
     margin: 0 10px;
-    width: 80%;
+    width: 100%;
     align-items: center;
     justify-content: center;
 }

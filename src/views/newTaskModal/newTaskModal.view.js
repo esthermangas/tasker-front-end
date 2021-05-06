@@ -15,25 +15,33 @@ const NewTaskModal = (props) => {
     description: '',
     colection: undefined,
   });
+  const [error, setError] = useState({});
   const handleDescriptionTask = (e) => {
     setData({ ...data, description: e.target.value });
   };
   const handleSelectColection = (value) => {
     setData({ ...data, colection: value });
   };
+
   const handleSubmit = () => {
-    const finalBody = {
-      ...data,
-      date: format(dayForTask, 'yyyy-MM-dd'),
-      colection: data.colection.value,
-    };
-    fetchResource('POST', `task`, { body: finalBody }, {}).then(() => {
-      closeModal();
-      setRefreshCalendar(true);
-    });
+    if (data.description) {
+      const finalBody = {
+        ...data,
+        date: format(dayForTask, 'yyyy-MM-dd'),
+        colection: data.colection.value,
+      };
+      fetchResource('POST', `task`, { body: finalBody }, {}).then(() => {
+        closeModal();
+        setRefreshCalendar(true);
+        setError({});
+      });
+    } else {
+      setError({ description: 'Name for task is required' });
+    }
   };
   const handleCloseModal = () => {
     closeModal();
+    setError({});
   };
   return (
     <Modal open={openModal} closeModal={handleCloseModal}>
@@ -41,7 +49,12 @@ const NewTaskModal = (props) => {
         <div className={styles.dataContainer}>
           <div className={styles.data}>
             <div className={styles.input}>
-              <Input label="New task" value={data.description} onChange={handleDescriptionTask} />
+              <Input
+                label="New task"
+                value={data.description}
+                onChange={handleDescriptionTask}
+                error={error.description}
+              />
             </div>
             <SelectColection value={data.colection} onChange={handleSelectColection} />
           </div>

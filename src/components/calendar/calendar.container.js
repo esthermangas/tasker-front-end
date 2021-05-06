@@ -12,10 +12,12 @@ const CalendarContainer = (props) => {
   const handleAddMonth = () => {
     setMonth(addMonths(month, 1));
     setLoading(true);
+    refresh(true);
   };
   const handleSubMonth = () => {
     setMonth(subMonths(month, 1));
     setLoading(true);
+    refresh(true);
   };
   const from = format(startOfMonth(month), 'yyyy-MM-dd');
   const to = format(endOfMonth(month), 'yyyy-MM-dd');

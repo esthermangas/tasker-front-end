@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FiChevronLeft, FiMoreVertical } from 'react-icons/all';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -27,10 +27,12 @@ const OneColection = (props) => {
   const { setRefreshContext, openModal, editModal, refreshColection, setRefreshColection } = props;
   const classes = useStyles();
   const history = useHistory();
+  const inputRef = useRef(null);
   const [refresh, setRefresh] = useState(false);
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
   const [colection, setColection] = useState({});
+  const [error, setError] = useState({});
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [data, setData] = useState({
     description: '',
@@ -98,11 +100,21 @@ const OneColection = (props) => {
     setData({ ...data, date });
   };
   const handleSaveTask = () => {
-    const finalBody = { ...data, date: format(data.date, 'yyyy-MM-dd') };
-    fetchResource('POST', 'task', { body: finalBody }, {}).then(() => {
-      setRefreshContext(true);
-      setRefresh(true);
-    });
+    if (data.description && data.date) {
+      const finalBody = { ...data, date: format(data.date, 'yyyy-MM-dd') };
+      fetchResource('POST', 'task', { body: finalBody }, {}).then(() => {
+        setRefreshContext(true);
+        setRefresh(true);
+        setData({
+          description: '',
+          date: new Date(),
+          colection: id,
+        });
+        setError({});
+      });
+    } else {
+      setError({ description: 'Name for task is required' });
+    }
   };
   const handleDeleteColection = () => {
     fetchResource('DELETE', `colection/${id}`, {}, {}).then(() => {
@@ -110,6 +122,7 @@ const OneColection = (props) => {
       history.push('/app/collections');
     });
   };
+
   const openEditModal = () => {
     handleCloseMenu();
     editModal(colection);
@@ -154,7 +167,13 @@ const OneColection = (props) => {
         <div className={styles.addTask}>
           <div className={styles.inputsModal}>
             <div className={styles.input}>
-              <Input label="Task" value={data.description} onChange={handleChangeDescription} />
+              <Input
+                label="Task"
+                value={data.description}
+                onChange={handleChangeDescription}
+                error={error.description}
+                ref={inputRef}
+              />
             </div>
             <div className={styles.input}>
               <DatePickerTask
@@ -168,9 +187,7 @@ const OneColection = (props) => {
                 inputProps={{ className: classes.root }}
               />
             </div>
-          </div>
-          <div className={styles.buttons}>
-            <div className={styles.button}>
+            <div className={styles.buttons}>
               <Button label="SAVE" onClick={handleSaveTask} variant="primary" />
             </div>
           </div>
