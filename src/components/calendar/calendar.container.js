@@ -29,7 +29,7 @@ const CalendarContainer = (props) => {
         refresh(false);
       });
     }
-  }, [refreshCalendar, month]);
+  }, [refreshCalendar]);
   return (
     !loading && (
       <CalendarView month={month} onAddMonth={handleAddMonth} onSubMonth={handleSubMonth} />
